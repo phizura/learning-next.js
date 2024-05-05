@@ -1,46 +1,42 @@
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const LoginView = () => {
+const RegisterView = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const { push, query } = useRouter();
-
-  const callbackUrl: any = query.callbackUrl || "/";
-
+  const { push } = useRouter();
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setError("");
     setIsLoading(true);
+    const data = {
+      email: event.target.email.value,
+      fullname: event.target.fullname.value,
+      password: event.target.password.value,
+    };
+    const result = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-    try {
-      const res = await signIn("credentials", {
-        redirect: false,
-        // kirim email dan password
-        email: event.target.email.value,
-        password: event.target.password.value,
-        callbackUrl,
-      });
-
-      if (!res?.error) {
-        setIsLoading(false);
-        push(callbackUrl);
-      } else {
-        setIsLoading(false);
-        setError("Email or password incorrect");
-      }
-    } catch (error) {
+    if (result.status === 200) {
+      event.target.reset();
       setIsLoading(false);
-      setError("Email or password incorrect");
+      push("/auth/login");
+    } else {
+      setIsLoading(false);
+      setError(result.status === 400 ? "Email sudah terdaftar" : "");
     }
   };
   return (
     <div className="h-[100vh] w-[100vw] flex justify-center flex-col items-center">
-      <h1 className="text-[32px] mb-[10px]">Login</h1>
+      <h1 className="text-[32px] mb-[10px]">Register</h1>
       {error && <p className="text-red-500">{error}</p>}
-      <div className="w-[35%] p-[20px] shadow-lg shadow-current mb-[20px]">
+      <div className="w-[50%] p-[20px] shadow-lg shadow-current mb-[20px]">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col m-[20px] mb-0">
             <label htmlFor="email" className="">
@@ -51,6 +47,18 @@ const LoginView = () => {
               name="email"
               id="email"
               placeholder="email"
+              className="p-[10px] bg-[#eee] mt-[5px]"
+            />
+          </div>
+          <div className="flex flex-col m-[20px] mb-0">
+            <label htmlFor="fullname" className="">
+              Fullname
+            </label>
+            <input
+              type="text"
+              name="fullname"
+              id="fullname"
+              placeholder="fullname"
               className="p-[10px] bg-[#eee] mt-[5px]"
             />
           </div>
@@ -76,21 +84,10 @@ const LoginView = () => {
             </button>
           </div>
         </form>
-        <button
-          onClick={() =>
-            signIn("google", {
-              redirect: false,
-              callbackUrl,
-            })
-          }
-          className="w-[100%] p-[10px] m-0 text-center"
-        >
-          Sign In With Google Account
-        </button>
       </div>
       <p className="">
-        Don{"'"}t have an account? signup{" "}
-        <Link href="/auth/register" className="text-[#23bebe] ">
+        Have An Acount? Sign In{" "}
+        <Link href="/auth/login" className="text-[#23bebe] ">
           here
         </Link>
       </p>
@@ -98,4 +95,4 @@ const LoginView = () => {
   );
 };
 
-export default LoginView;
+export default RegisterView;
