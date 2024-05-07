@@ -1,8 +1,13 @@
 import Button from "@/components/Elements/Button/Index";
 import InputElement from "@/components/Elements/Input";
 
-const FormLogin = (props: any) => {
-  const { onsubmit, disabled, onclick } = props;
+interface IFormLoginProps {
+  onsubmit: (event: any) => void;
+  disabled: boolean;
+  onclick: () => void;
+}
+
+const FormLogin = ({ onsubmit, disabled, onclick }: IFormLoginProps) => {
   return (
     <>
       <form onSubmit={onsubmit}>

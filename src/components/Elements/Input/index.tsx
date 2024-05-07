@@ -1,8 +1,16 @@
 import Input from "./Input";
 import Label from "./Label";
 
-const InputElement = (props: any) => {
-  const { name, type, placeholder, classnameinput,label } = props;
+interface InputElementProps {
+  name: string;
+  type: string;
+  placeholder: string;
+  classnameinput: string;
+  label: string;
+}
+
+const InputElement = ({name, type, placeholder, classnameinput,label}: InputElementProps) => {
+  // const { name, type, placeholder, classnameinput,label } = props;
   return (
     <div className="flex flex-col m-[20px] mb-0">
       <Label htmlfor={name}>{label}</Label>
@@ -11,7 +19,7 @@ const InputElement = (props: any) => {
         name={name}
         id={name}
         placeholder={placeholder}
-        className={classnameinput}
+        classname={classnameinput}
       />
     </div>
   );

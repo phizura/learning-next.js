@@ -1,5 +1,9 @@
-const Label = (props: any) => {
-  const { htmlfor, classname, children } = props;
+interface LabelProps {
+  htmlfor: string;
+  children: React.ReactNode;
+}
+
+const Label = ({ htmlfor, children }: any) => {
   return (
     <label htmlFor={htmlfor} className="mb-1">
       {children}

@@ -42,7 +42,7 @@ const RegisterView = () => {
       textsign="Have An Account? Signin "
       href="/auth/login"
     >
-      <FormRegister onsubmit={handleSubmit} disable={isLoading}/>
+      <FormRegister onsubmit={handleSubmit} disabled={isLoading}/>
     </AuthLayouts>
   );
 };

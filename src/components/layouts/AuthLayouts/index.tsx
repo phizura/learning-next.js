@@ -1,8 +1,20 @@
 import Link from "next/link";
 
-const AuthLayouts = (props: any) => {
-  const { children, error, textsign, href, title } = props;
+interface IAuthLayoutsProps {
+  children: React.ReactNode;
+  textsign: React.ReactNode;
+  href: string;
+  title: React.ReactNode;
+  error: React.ReactNode | string;
+}
 
+const AuthLayouts = ({
+  children,
+  error,
+  textsign,
+  href,
+  title,
+}: IAuthLayoutsProps) => {
   return (
     <>
       <div className="h-[100vh] w-[100vw] flex justify-center flex-col items-center">
