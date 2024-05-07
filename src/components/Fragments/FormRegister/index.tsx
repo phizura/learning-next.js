@@ -5,7 +5,6 @@ const FormRegister = (props: any) => {
   const { onsubmit, disabled } = props;
   return (
     <>
-      <div className="w-[35%] p-[20px] shadow-lg shadow-current mb-[20px]">
         <form onSubmit={onsubmit}>
           <InputElement
             name="email"
@@ -35,7 +34,6 @@ const FormRegister = (props: any) => {
             {disabled ? "..." : "Register"}
           </Button>
         </form>
-      </div>
     </>
   );
 };

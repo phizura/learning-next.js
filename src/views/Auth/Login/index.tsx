@@ -41,7 +41,7 @@ const LoginView = () => {
     <>
       <AuthLayouts
         error={error}
-        textsign="Dont Have An Account? Signup "
+        textsign="Don't Have An Account? Signup "
         href="/auth/register"
         title="Login"
       >
